@@ -1,26 +1,8 @@
 <?php
 class layout
 {
-    public static function LoggedIn()
-    {
-        $user = $_SESSION['user'];
-        $x = '<li style="text-align:right"><a href="#">Logout</a></li>';
-        return $x;
-    }
-    public static function LoggedOut()
-    {
-        $x = '<li style="text-align:right"><a href="#">Login</a></li>';
-        return $x;
-    }
     public static function pageTop($title)
     {
-
-		if (isset($_SESSION['user'])) {
-            $menu = static::LoggedIn();
-        } else {
-            $menu = static::LoggedOut();
-        }
-
         echo <<<pageTop
         <!DOCTYPE html>
 <html lang="en">

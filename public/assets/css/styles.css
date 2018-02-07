@@ -12,17 +12,18 @@
  * navigation changes.
 */
 
+
 body { padding-top: 70px; }
 
 
 
 /**
- * Bootstrap requires a containing element to wrap site contents 
+ * Bootstrap requires a containing element to wrap site contents
  * and house the grid system. You may choose one of two containers.
  * Use .container for a responsive fixed width container.
  * Use .container-fluid for a full width container.
 
- * If using container-fluid, you may need to set a maximum width, 
+ * If using container-fluid, you may need to set a maximum width,
  * so that the container will not spread to the entire viewport.
 */
 
@@ -31,9 +32,9 @@ body { padding-top: 70px; }
 
 
 /**
- * Bootstrap adds a 20px margin to the bottom of elements that 
- * have been given the class of thumbnail. When images have a 
- * caption after them, this margin may be too large. You can 
+ * Bootstrap adds a 20px margin to the bottom of elements that
+ * have been given the class of thumbnail. When images have a
+ * caption after them, this margin may be too large. You can
  * override it like this:
 */
 

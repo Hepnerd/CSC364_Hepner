@@ -8,7 +8,7 @@ class product
     $db = connectToDb();
     $sql = 'select * from products';
     $posts = $db->query($sql);
-		$today = date("Y-m-d");
+		$today = date("Y-m-d", strtotime('yesterday'));
         echo <<<products
         <!-- Page Content -->
 		<div class="container-fluid">
