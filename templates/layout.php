@@ -4,23 +4,23 @@ class layout
     public static function LoggedIn()
     {
         $user = $_SESSION['user'];
-        $x = '';
+        $x = '<li style="text-align:right"><a href="#">Logout</a></li>';
         return $x;
     }
     public static function LoggedOut()
     {
-        $x = '';
+        $x = '<li style="text-align:right"><a href="#">Login</a></li>';
         return $x;
     }
     public static function pageTop($title)
     {
-        /*
+
 		if (isset($_SESSION['user'])) {
             $menu = static::LoggedIn();
         } else {
             $menu = static::LoggedOut();
         }
-		*/
+
         echo <<<pageTop
         <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +70,7 @@ class layout
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Hepner's Haggles</a>
+					<a class="navbar-brand" href="http://hepnerd.com">Hepner's Haggles</a>
 				</div>
 				<!-- /.navbar-header -->
 
@@ -80,7 +80,7 @@ class layout
 						<li><a href="#">Nav item 1</a></li>
 						<li><a href="#">Nav item 2</a></li>
 						<li><a href="#">Nav item 3</a></li>
-					</ul>
+					</ul>3
 				</div>
 				<!-- /.navbar-collapse -->
 			</div>
@@ -88,6 +88,32 @@ class layout
 		</nav>
 		<!-- /.navbar -->
 pageTop;
+    }
+	public static function pageBottom()
+    {
+    echo <<<pageBottom
+    </div>
+    <!-- /.row -->
+
+    <hr>
+    <footer class="margin-tb-3">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Copyright &copy; Hepnerd.com 2018</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!-- /.container-fluid -->
+
+  <!-- JQuery scripts -->
+    <script src="assets/js/jquery-1.11.2.min.js"></script>
+
+  <!-- Bootstrap Core scripts -->
+  <script src="assets/js/bootstrap.min.js"></script>
+  </body>
+</html>
+pageBottom;
     }
     }
 ?>
