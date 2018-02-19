@@ -88,3 +88,9 @@ body { padding-top: 70px; }
 	margin-top: 3em;
 	margin-bottom: 3em;
 }
+
+.productBox:hover
+{
+	border-color: lightgray;
+  box-shadow: 0 0 18px rgba(209, 209, 250);
+}
