@@ -19,12 +19,15 @@ if ($requestType == 'GET') {
                         $email = strtoupper($email);
                         $password = $_POST['password'];
                         //echo $password;
-                        $sql = 'select * from customers where email = ' . $email . '';
-                        //echo $sql;
+                        //$sql = 'select * from customers where email = ' . $email . '';
+                        $sql = 'SELECT * FROM `customers` WHERE `email` = "' . $email . '"';
+                        echo $sql;
                         $db = connectToDb();
-                        $posts = $db->query($sql);
-                        //echo $posts['password'];
-                        //print_r($posts);
+                        $datastuff = $db->query($sql);
+                        $posts = $datastuff->fetch_assoc();
+                        echo $posts['password'];
+
+
                         if (password_verify($password, $posts['password']))
                         {
                           echo "password works";
