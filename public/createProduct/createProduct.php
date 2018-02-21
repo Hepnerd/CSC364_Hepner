@@ -2,14 +2,13 @@
 include('../../includes/application_includes.php');
 include("../../templates/layout.php");
 $requestType = $_SERVER['REQUEST_METHOD'];
+layout::pageTop("Hepner's Haggles");
 //Layout::createProduct('World Travels Create Post');
 $fields = [
     'name' => ['required', 'string'],
     'description' => ['required', 'string'],
     'qty_available' => ['required', 'string'],
-    'price' => ['required', 'string'],
-    // 'image' => ['optional', 'string']
-];
+    'price' => ['required', 'string']];
 if ($requestType == 'GET') {
                     // Display the form
                     showForm();
@@ -50,7 +49,7 @@ function showForm($data = null)
                           <div class="form-group">
                               <label class="col-md-3 control-label" for="name">Name</label>
                               <div class="col-md-8">
-                                  <input id="name" name="name" type="text" placeholder="post name" value="$name" class="form-control input-md" required="">
+                                  <input id="name" name="name" type="text" value="$name" class="form-control input-md" required="">
                               </div>
                           </div>
 
@@ -66,7 +65,7 @@ function showForm($data = null)
                           <div class="form-group">
                               <label class="col-md-3 control-label" for="qty_available">Quantity Available</label>
                               <div class="col-md-8">
-                                  <input id="qty_available" name="qty_available" type="text" placeholder="effective date" value="$qty_available" class="form-control input-md" required="">
+                                  <input id="qty_available" name="qty_available" type="text" value="$qty_available" class="form-control input-md" required="">
                               </div>
                           </div>
 
@@ -74,7 +73,7 @@ function showForm($data = null)
                           <div class="form-group">
                               <label class="col-md-3 control-label" for="price">Price</label>
                               <div class="col-md-8">
-                                  <input id="price" name="price" type="text" placeholder="price" value="$price" class="form-control input-md" required="">
+                                  <input id="price" name="price" type="text" value="$price" class="form-control input-md" required="">
                               </div>
                           </div>
 <p>

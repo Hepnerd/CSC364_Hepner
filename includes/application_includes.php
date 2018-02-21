@@ -1,5 +1,4 @@
 <?php
-//require_once($_SERVER['DOCUMENT_ROOT'].'/../includes/config.php');
 
     function connectToDb()
     {
@@ -17,5 +16,3 @@
  {
  $db -> close();
  }
-//$requestType = $_SERVER[ 'REQUEST_METHOD' ];
-//session_start();
