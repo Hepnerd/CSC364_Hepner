@@ -16,7 +16,7 @@ class product
 				<div class="col-sm-12">
 					<div class="page-header">
 						<h1>Product List</h1>
-            <a href="/createProduct/createProduct.php" style="float:right" type="button" class="btn btn-default">Add Product</a>
+            <a href="/product/createProduct.php" style="float:right" type="button" class="btn btn-default">Add Product</a>
 						<p>Posted by <span class="glyphicon glyphicon-user"></span> <a href="#">Nathanael Hepner</a> on <span class="glyphicon glyphicon-time"></span> $today</p>
 					</div>
 				</div>
@@ -32,6 +32,7 @@ while ($post = $posts->fetch_assoc()) {
   $title = $post['name'];
   $desc = $post['description'];
   $stock = $post['qty_available'];
+  $id = $post['id'];
   $row = "";
   $rowEnd = "";
   if ($count % 3 == 0 && $count != 0)
@@ -41,13 +42,16 @@ while ($post = $posts->fetch_assoc()) {
   }
 echo $rowEnd;
 echo $row;
+echo "<a style='color: black; text-decoration: none;' href='/product/viewProduct.php?id=" . $id . "'>";
 echo '
 <div class="col-sm-4 productBox">
   <img class="img-responsive thumbnail" src="http://placehold.it/700x350" alt="">
   <div class="caption">';
-echo "<h4><a href='#'>" . $title . "</a><div class='stock'>Stock: " . $stock . "</div></h4>";
+echo "<h4><p>" . $title . "</p><div class='stock'>Stock: " . $stock . "</div></h4>";
 echo "<p>" . $desc . "</p>";
 echo '</div></div>';
+echo "</a>";
+
 $count++;
 }
     }

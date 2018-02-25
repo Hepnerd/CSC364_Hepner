@@ -21,6 +21,11 @@ class layout
 
 		<!-- Bootstrap Core CSS file -->
 		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <!-- JQuery scripts -->
+      <script src="assets/js/jquery-1.11.2.min.js"></script>
+
+    <!-- Bootstrap Core scripts -->
+    <script src="assets/js/bootstrap.min.js"></script>
 
 		<!-- Override CSS file - add your own CSS rules -->
 		<link rel="stylesheet" href="/assets/css/styles.css">
@@ -33,6 +38,18 @@ class layout
 	</head>
 	<body>
 		<style>
+    .box{
+    float:left;
+    overflow: hidden;
+    background: #f0e68c;
+}
+/* Add padding and border to inner content
+for better animation effect */
+.box-inner{
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #a29415;
+}
     .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -108,7 +125,7 @@ class layout
 						<li><a href="#">Nav item 1</a></li>
 						<li><a href="#">Nav item 2</a></li>
 						<li><a href="#">Nav item 3</a></li>
-            <li><a id="myBtn" href="#">Log In/Create Account</a></li>
+            <li><a class="myBtn" id="myBtn" href="#">Log In/Create Account</a></li>
 					</ul>
 				</div>
         <div id="myModal" class="modal">
@@ -117,11 +134,10 @@ class layout
           <div class="modal-content">
             <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-    <h4 class="modal-title" id="myModalLabel">Login to hepnerd.com</h4>
+    <h4 class="modal-title" id="myModalLabel"><b>Login to hepnerd.com</b></h4>
 </div>
             <div class="modal-body">
               <div class="row">
-                  <div class="col-xs-6">
                       <div class="well">
                           <form id="loginForm" method="POST" action="/login/login.php" novalidate="novalidate">
                               <div class="form-group">
@@ -142,36 +158,39 @@ class layout
                                   <p class="help-block">(if this is a private computer)</p>
                               </div>
                               <button type="submit" class="btn btn-success btn-block">Login</button>
-                              <a href="#" id="helpbtn" class="btn btn-default btn-block">Help to login</a>
+                              <br/>
+                              <p><a href="/login/register.php" class="btn btn-info btn-block">Yes please, register now!</a></p>
                           </form>
                       </div>
-                  </div>
-                  <div class="col-xs-6">
-                      <p class="lead">Register now for <span class="text-success">FREE</span></p>
-                      <ul class="list-unstyled" style="line-height: 2">
-                          <li><span class="fa fa-check text-success"></span> See all your orders</li>
-                          <li><span class="fa fa-check text-success"></span> Fast re-order</li>
-                          <li><span class="fa fa-check text-success"></span> Save your favorites</li>
-                          <li><span class="fa fa-check text-success"></span> Fast checkout</li>
-                          <li><span class="fa fa-check text-success"></span> Get a gift <small>(only new customers)</small></li>
-                          <br/>
-
-                      </ul>
-                      <p><a href="/login/register.php" class="btn btn-info btn-block">Yes please, register now!</a></p>
-                  </div>
               </div>
           </div>
           </div>
 
         </div>
         <script>
+        $(document).ready(function() {
+    var window = $(window);
+
+        // Function to handle changes to style classes based on window width
+        function checkWidth() {
+        if (window.width() < 980) {
+            $('#myBtn').removeClass('myBtn').addClass('Small');
+            };
+
+        if (window.width() >= 980) {
+            $('#myBtn').removeClass('myBtn').addClass('Large');
+        }
+    }
+
+    // Execute on load
+    checkWidth();
+
+    // Bind event listener
+        $(window).resize(checkWidth);
+});
         var modal = document.getElementById('myModal');
 
 // Get the button that opens the modal
-var helpbtn = document.getElementById("helpbtn");
-helpbtn.onclick = function() {
-  $('#helpbtn').text("Figure it out yourself");
-}
 var btn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the modal
@@ -218,11 +237,7 @@ pageTop;
   </div>
   <!-- /.container-fluid -->
 
-  <!-- JQuery scripts -->
-    <script src="assets/js/jquery-1.11.2.min.js"></script>
 
-  <!-- Bootstrap Core scripts -->
-  <script src="assets/js/bootstrap.min.js"></script>
   </body>
 </html>
 pageBottom;
