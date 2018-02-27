@@ -24,6 +24,7 @@ if ($requestType == 'GET') {
                         $price = htmlspecialchars($_POST['price'], ENT_QUOTES);
                         //$input = $_POST;
                         $sql = "insert into products (name, description, qty_available, price) values ('" . $name . "', '" . $description . "', '" . $qty_available . "', '" . $price . "');";
+                        echo $sql;
                         $db = connectToDb();
                         $posts = $db->query($sql);
                         header('Location: /../index.php');
@@ -34,6 +35,7 @@ if ($requestType == 'GET') {
 
 function showForm($data = null)
                   {
+
                       $name = $data['name'];
                       $description = $data['description'];
                       $qty_available = $data['qty_available'];
@@ -76,7 +78,7 @@ function showForm($data = null)
                                   <input id="price" name="price" type="text" value="$price" class="form-control input-md" required="">
                               </div>
                           </div>
-<p>
+                          <p>
                           <!-- Button (Double) -->
                           <div class="form-group">
                               <label class="col-md-3 control-label" for="submit"></label>

@@ -21,16 +21,20 @@ if ($requestType == 'GET') {
                         //echo $password;
                         //$sql = 'select * from customers where email = ' . $email . '';
                         $sql = 'SELECT * FROM `customers` WHERE `email` = "' . $email . '"';
-                        echo $sql;
+                        //echo $sql;
                         $db = connectToDb();
                         $datastuff = $db->query($sql);
                         $posts = $datastuff->fetch_assoc();
-                        echo $posts['password'];
+                        //echo $posts['password'];
+                        //echo $posts['password'];
 
 
                         if (password_verify($password, $posts['password']))
                         {
                           echo "password works";
+                        }
+                        else {
+                          echo "Fails";
                         }
                         }
                 else {

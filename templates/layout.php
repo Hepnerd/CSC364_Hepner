@@ -197,7 +197,7 @@ $(".box").hide();
   function checkWidth()
   {
 //  alert($(window).width());
-  if ($(window).width() > 950)
+  if ($(window).width() > 980)
   {
     $('#myBtn').removeClass();
     $('#myBtn').addClass('large');
