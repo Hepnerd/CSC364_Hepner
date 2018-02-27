@@ -3,6 +3,7 @@ class layout
 {
     public static function pageTop($title)
     {
+      $serverRoot = $_SERVER['DOCUMENT_ROOT'];
         echo <<<pageTop
         <!DOCTYPE html>
 <html lang="en">
@@ -16,40 +17,38 @@ class layout
 		<meta name="robots" content="index, follow">
 
 		<!-- icons -->
-		<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-		<link rel="shortcut icon" href="/assets/img/favicon.ico">
+		<link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png">
+		<link rel="shortcut icon" href="../../assets/img/favicon.ico">
 
 		<!-- Bootstrap Core CSS file -->
-		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
     <!-- JQuery scripts -->
-      <script src="assets/js/jquery-1.11.2.min.js"></script>
+      <script src="../../assets/js/jquery-1.11.2.min.js"></script>
 
     <!-- Bootstrap Core scripts -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/bootstrap.min.js"></script>
 
 		<!-- Override CSS file - add your own CSS rules -->
-		<link rel="stylesheet" href="/assets/css/styles.css">
+		<link rel="stylesheet" href="../../assets/css/styles.css">
 
 		<!-- Conditional comment containing JS files for IE6 - 8 -->
 		<!--[if lt IE 9]>
-			<script src="/assets/js/html5.js"></script>
-			<script src="/assets/js/respond.min.js"></script>
+			<script src="../../assets/js/html5.js"></script>
+			<script src="../../assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
 	<body>
 		<style>
-    .box{
+    .box {
+      display:none; !important;
     float:left;
     overflow: hidden;
-    background: #f0e68c;
 }
 /* Add padding and border to inner content
 for better animation effect */
 .box-inner{
     width: 400px;
-    padding: 10px;
-    border: 1px solid #a29415;
-}
+  }
     .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -125,6 +124,19 @@ for better animation effect */
 						<li><a href="#">Nav item 1</a></li>
 						<li><a href="#">Nav item 2</a></li>
 						<li><a href="#">Nav item 3</a></li>
+            <li class="box" style="height:50px;">
+
+
+<a>
+            <form id="loginForm" method="POST" action="/login/login.php" novalidate="novalidate">
+                    <input type="text" style="color: black" id="email" name="email" value="" required="" title="Please enter your email" placeholder="Email">
+                    <input type="password" style="color: black" id="password" name="password" value="" required="" placeholder="password" title="Please enter your password">
+                <button type="submit" style="color:black" >Login</button>
+            </form>
+</a>
+
+
+            </li>
             <li><a class="myBtn" id="myBtn" href="#">Log In/Create Account</a></li>
 					</ul>
 				</div>
@@ -168,26 +180,37 @@ for better animation effect */
 
         </div>
         <script>
-        $(document).ready(function() {
-    var window = $(window);
+$(document).ready(function(){
 
-        // Function to handle changes to style classes based on window width
-        function checkWidth() {
-        if (window.width() < 980) {
-            $('#myBtn').removeClass('myBtn').addClass('Small');
-            };
+$(".box").hide();
 
-        if (window.width() >= 980) {
-            $('#myBtn').removeClass('myBtn').addClass('Large');
-        }
-    }
-
-    // Execute on load
-    checkWidth();
-
-    // Bind event listener
-        $(window).resize(checkWidth);
+  $("#myBtn").click(function(){
+    if ($(this).hasClass("large"))
+    {
+    $(".box").animate({
+      width: "toggle"
+    });
+  }
+  });
+  checkWidth();
+  $(window).resize(checkWidth);
+  function checkWidth()
+  {
+//  alert($(window).width());
+  if ($(window).width() > 950)
+  {
+    $('#myBtn').removeClass();
+    $('#myBtn').addClass('large');
+  }
+  else
+  {
+    $('#myBtn').removeClass();
+    $('#myBtn').addClass('small');
+  }
+}
 });
+
+
         var modal = document.getElementById('myModal');
 
 // Get the button that opens the modal
@@ -198,7 +221,13 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
+  //alert("Hi");
+
+  if ($("#myBtn").hasClass("small"))
+  {
+    //alert("Hi");
     modal.style.display = "block";
+  }
 }
 
 // When the user clicks on <span> (x), close the modal
