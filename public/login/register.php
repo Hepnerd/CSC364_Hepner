@@ -11,13 +11,24 @@ $fields = [
     'price' => ['required', 'string']];
 if ($requestType == 'GET') {
                     // Display the form
+                    if (isset($_SESSION['login_user'])) {
+                      header("Location: /../index.php");
+                    }
+                    if (!isset($_SESSION['login_user']))
+                    {
                     showForm();
+                  }
                 } elseif ($requestType == 'POST') {
                     //if (validateInput($_POST)) {
                         // Data is valid so save it to the database
                         // pull the fields from the POST array.
-                        print_r($_POST);
+                        //print_r($_POST);
                         //session_start();
+                        if (isset($_SESSION['login_user'])) {
+                          header("Location: /../index.php");
+                        }
+                        if (!isset($_SESSION['login_user']))
+                        {
                         $firstName = htmlspecialchars($_POST['firstName'], ENT_QUOTES);
                         $lastName = htmlspecialchars($_POST['lastName'], ENT_QUOTES);
                         $address = htmlspecialchars($_POST['address'], ENT_QUOTES);
@@ -30,15 +41,15 @@ if ($requestType == 'GET') {
                         $beforePassword = htmlspecialchars($_POST['password'], ENT_QUOTES);
                         $password = password_hash($beforePassword, PASSWORD_DEFAULT);
 
-                        echo $password;
+                        //echo $password;
 
 
                         //$input = $_POST;
                         $sql = "insert into customers (firstname, lastname, address, city, state, zip, phone, email, password) values ('" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "', '" . $email . "', '" . $password . "');";
                         $db = connectToDb();
                         $posts = $db->query($sql);
-                        exit(header('Location: /../index.php'));
-
+                        header('Location: /../index.php');
+}
                     } else {
                         // This is an error so show the form again
                         showForm($_POST);
@@ -141,5 +152,3 @@ function showForm($data = null)
                   </form>
 postform;
 }
-
- ?>

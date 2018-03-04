@@ -1,12 +1,155 @@
 <?php
+ob_start();
+session_start();
 class layout
 {
+  public static function LoggedIn()
+{
+    $user = $_SESSION['login_user'];
+    //print_r($_SESSION['login_user']);
+    $x = '
+    <li><a href="#">Welcome, ' . $user['firstname'] . " " .  $user['lastname'] . '</a></li>
+    <li><a href="/login/logout.php">Logout</a></li>';
+    return $x;
+}
+public static function LoggedOut()
+{
+    $x = '
+    <li class="box" style="height:50px;">
+
+
+    <a>
+    <form id="loginForm" method="POST" action="/login/login.php" novalidate="novalidate">
+            <input type="text" style="color: black" id="email" name="email" value="" required="" title="Please enter your email" placeholder="Email">
+            <input type="password" style="color: black" id="password" name="password" value="" required="" placeholder="password" title="Please enter your password">
+        <button type="submit" style="color:black" >Login</button>
+    </form>
+    </a>
+
+
+    </li>
+    <li><a class="myBtn" id="myBtn" href="#">Log In</a></li>
+    <li><a href=/login/register.php>Register</a></li>
+    </ul>
+    </div>
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="myModalLabel"><b>Login to hepnerd.com</b></h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+              <div class="well">
+                  <form id="loginForm" method="POST" action="/login/login.php" novalidate="novalidate">
+                      <div class="form-group">
+                          <label for="email" class="control-label">Email</label>
+                          <input type="text" class="form-control" id="email" name="email" value="" required="" title="Please enter your email" placeholder="example@gmail.com">
+                          <span class="help-block"></span>
+                      </div>
+                      <div class="form-group">
+                          <label for="password" class="control-label">Password</label>
+                          <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password">
+                          <span class="help-block"></span>
+                      </div>
+                      <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+                      <button type="submit" class="btn btn-success btn-block">Login</button>
+                      <br/>
+                      <p><a href="/login/register.php" class="btn btn-info btn-block">Register now!</a></p>
+                  </form>
+              </div>
+      </div>
+    </div>
+    </div>
+
+    </div>
+    <script>
+    $(document).ready(function(){
+
+    $(".box").hide();
+
+    $("#myBtn").click(function(){
+    if ($(this).hasClass("largeWidth"))
+    {
+    $(".box").animate({
+    width: "toggle"
+    });
+    }
+    });
+    checkWidth();
+    $(window).resize(checkWidth);
+    function checkWidth()
+    {
+    //  alert($(window).width());
+    if ($(window).width() > 980)
+    {
+    $("#myBtn").removeClass();
+    $("#myBtn").addClass("largeWidth");
+    }
+    else
+    {
+    $("#myBtn").removeClass();
+    $("#myBtn").addClass("smallWidth");
+    }
+    }
+    });
+
+
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+    //alert("Hi");
+
+    if ($("#myBtn").hasClass("smallWidth"))
+    {
+    //alert("Hi");
+    modal.style.display = "block";
+    }
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+    modal.style.display = "none";
+    }
+    }
+    </script>';
+    return $x;
+}
     public static function pageTop($title)
     {
+      if (isset($_SESSION['login_user']))
+      {
+        $menu = static::LoggedIn();
+      }
+
+      if (!isset($_SESSION['login_user'])) {
+        $menu = static::LoggedOut();
+      }
+
+
+
+      if (isset($_GET["msg"]) && $_GET["msg"] == 'failed') {
+        //echo "test works";
+      }
       $serverRoot = $_SERVER['DOCUMENT_ROOT'];
         echo <<<pageTop
         <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -69,6 +212,7 @@ for better animation effect */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 518px;
 }
 /*@media screen and (max-width: 500px) {
   .modal-content {
@@ -95,7 +239,7 @@ for better animation effect */
     text-decoration: none;
     cursor: pointer;
 }
-.stock
+.floatRight
 {
 	display:inline;
 	float:right;
@@ -121,127 +265,12 @@ for better animation effect */
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="#">Nav item 1</a></li>
+<!--						<li><a href="#">Nav item 1</a></li>
 						<li><a href="#">Nav item 2</a></li>
 						<li><a href="#">Nav item 3</a></li>
-            <li class="box" style="height:50px;">
+-->
+            $menu
 
-
-<a>
-            <form id="loginForm" method="POST" action="/login/login.php" novalidate="novalidate">
-                    <input type="text" style="color: black" id="email" name="email" value="" required="" title="Please enter your email" placeholder="Email">
-                    <input type="password" style="color: black" id="password" name="password" value="" required="" placeholder="password" title="Please enter your password">
-                <button type="submit" style="color:black" >Login</button>
-            </form>
-</a>
-
-
-            </li>
-            <li><a class="myBtn" id="myBtn" href="#">Log In/Create Account</a></li>
-					</ul>
-				</div>
-        <div id="myModal" class="modal">
-
-          <!-- Modal content -->
-          <div class="modal-content">
-            <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-    <h4 class="modal-title" id="myModalLabel"><b>Login to hepnerd.com</b></h4>
-</div>
-            <div class="modal-body">
-              <div class="row">
-                      <div class="well">
-                          <form id="loginForm" method="POST" action="/login/login.php" novalidate="novalidate">
-                              <div class="form-group">
-                                  <label for="email" class="control-label">Email</label>
-                                  <input type="text" class="form-control" id="email" name="email" value="" required="" title="Please enter your email" placeholder="example@gmail.com">
-                                  <span class="help-block"></span>
-                              </div>
-                              <div class="form-group">
-                                  <label for="password" class="control-label">Password</label>
-                                  <input type="password" class="form-control" id="password" name="password" value="" required="" title="Please enter your password">
-                                  <span class="help-block"></span>
-                              </div>
-                              <div id="loginErrorMsg" class="alert alert-error hide">Wrong username og password</div>
-                              <div class="checkbox">
-                                  <label>
-                                      <input type="checkbox" name="remember" id="remember"> Remember login
-                                  </label>
-                                  <p class="help-block">(if this is a private computer)</p>
-                              </div>
-                              <button type="submit" class="btn btn-success btn-block">Login</button>
-                              <br/>
-                              <p><a href="/login/register.php" class="btn btn-info btn-block">Yes please, register now!</a></p>
-                          </form>
-                      </div>
-              </div>
-          </div>
-          </div>
-
-        </div>
-        <script>
-$(document).ready(function(){
-
-$(".box").hide();
-
-  $("#myBtn").click(function(){
-    if ($(this).hasClass("large"))
-    {
-    $(".box").animate({
-      width: "toggle"
-    });
-  }
-  });
-  checkWidth();
-  $(window).resize(checkWidth);
-  function checkWidth()
-  {
-//  alert($(window).width());
-  if ($(window).width() > 980)
-  {
-    $('#myBtn').removeClass();
-    $('#myBtn').addClass('large');
-  }
-  else
-  {
-    $('#myBtn').removeClass();
-    $('#myBtn').addClass('small');
-  }
-}
-});
-
-
-        var modal = document.getElementById('myModal');
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  //alert("Hi");
-
-  if ($("#myBtn").hasClass("small"))
-  {
-    //alert("Hi");
-    modal.style.display = "block";
-  }
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>
 				<!-- /.navbar-collapse -->
 			</div>
 			<!-- /.container-fluid -->
@@ -272,4 +301,3 @@ pageTop;
 pageBottom;
     }
     }
-?>

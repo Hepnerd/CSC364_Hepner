@@ -6,4 +6,3 @@ include("../templates/products.php");
 layout::pageTop("Hepner's Haggles");
 product::products();
 layout::pageBottom();
-?>

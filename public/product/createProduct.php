@@ -11,23 +11,34 @@ $fields = [
     'price' => ['required', 'string']];
 if ($requestType == 'GET') {
                     // Display the form
+                    if (!isset($_SESSION['login_user'])) {
+                      header("Location: /../index.php");
+                    }
+                    if (isset($_SESSION['login_user']))
+                    {
                     showForm();
+                  }
                 } elseif ($requestType == 'POST') {
                     //if (validateInput($_POST)) {
                         // Data is valid so save it to the database
                         // pull the fields from the POST array.
-                        print_r($_POST);
-
+                        //print_r($_POST);
+                        if (!isset($_SESSION['login_user'])) {
+                          header("Location: /../index.php");
+                        }
+                        if (isset($_SESSION['login_user']))
+                        {
                         $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
                         $description = htmlspecialchars($_POST['description'], ENT_QUOTES);
                         $qty_available = htmlspecialchars($_POST['qty_available'], ENT_QUOTES);
                         $price = htmlspecialchars($_POST['price'], ENT_QUOTES);
                         //$input = $_POST;
-                        $sql = "insert into products (name, description, qty_available, price) values ('" . $name . "', '" . $description . "', '" . $qty_available . "', '" . $price . "');";
-                        echo $sql;
+                        $sql = "insert into products (name, description, qty_available, price, isActive) values ('" . $name . "', '" . $description . "', '" . $qty_available . "', '" . $price . "', ' 1 ');";
+                        //echo $sql;
                         $db = connectToDb();
                         $posts = $db->query($sql);
                         header('Location: /../index.php');
+                      }
                     } else {
                         // This is an error so show the form again
                         showForm($_POST);
@@ -40,6 +51,7 @@ function showForm($data = null)
                       $description = $data['description'];
                       $qty_available = $data['qty_available'];
                       $price = $data['price'];
+
                       echo <<<postform
                   <form id="createPostForm" action='createProduct.php' method="POST" class="form-horizontal" enctype="multipart/form-data">
                       <fieldset>
@@ -92,5 +104,3 @@ function showForm($data = null)
                   </form>
 postform;
 }
-
- ?>

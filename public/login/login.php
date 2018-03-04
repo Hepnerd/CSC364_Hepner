@@ -5,13 +5,20 @@ $requestType = $_SERVER['REQUEST_METHOD'];
 //Layout::createProduct('World Travels Create Post');
 if ($requestType == 'GET') {
                     // Display the form
-                    header('Location: /../index.php');
+                    // Display the form
+                      header("Location: /../index.php");
                 } elseif ($requestType == 'POST') {
                     //if (validateInput($_POST)) {
                         // Data is valid so save it to the database
                         // pull the fields from the POST array.
                         //session_start();
                         //print_r($_POST);
+                        // Display the form
+                        if (isset($_SESSION['login_user'])) {
+                          header("Location: /../index.php");
+                        }
+                        if (!isset($_SESSION['login_user']))
+                        {
 
                         if ((isset($_POST['email']) != '' ) && (isset($_POST['password']) != '' ))
                         {
@@ -31,30 +38,17 @@ if ($requestType == 'GET') {
 
                         if (password_verify($password, $posts['password']))
                         {
-                          echo "password works";
+                          $_SESSION['login_user']= $posts;  // Initializing Session with value of PHP Variable
+                          //echo $_SESSION['login_user'];
+                          //echo " password works";
+                          header("Location: /../index.php");
                         }
+                      }
                         else {
-                          echo "Fails";
+                          //echo "Fails";
+                          header('Location: /../index.php?msg=failed');
                         }
-                        }
-                else {
-  //  header('location: /../index.php');
-
+                      }
+              }  else {
+    header('location: /../index.php');
 }
-/*
-
-                        $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
-                        $description = htmlspecialchars($_POST['description'], ENT_QUOTES);
-                        $qty_available = htmlspecialchars($_POST['qty_available'], ENT_QUOTES);
-                        $price = htmlspecialchars($_POST['price'], ENT_QUOTES);
-                        //$input = $_POST;
-                        $sql = "insert into products (name, description, qty_available, price) values ('" . $name . "', '" . $description . "', '" . $qty_available . "', '" . $price . "');";
-                        $db = connectToDb();
-                        $posts = $db->query($sql);
-                        header('Location: /../index.php');
-                        */
-                    } else {
-                        // This is an error so show the form again
-                        header('Location: /../index.php');
-                    }
-?>
