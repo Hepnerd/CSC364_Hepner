@@ -89,10 +89,16 @@ while ($post = $posts->fetch_assoc()) {
                   <th><h4><a href="/product/deleteProduct.php?id=' . $id . '">Delete</a></h4></th>';
     $adminStock = "<div class='floatRight'>Active?: " . $adminactive . "&nbsp|&nbsp</div>";
   }
-  if ($admin != "Admin")
+  if ($admin != "Admin" && $admin != "notAdmin")
   {
     $adminEditHeader = '';
     $adminEdit = '';
+    $adminStock = '';
+  }
+  if ($admin == "notAdmin")
+  {
+    $adminEditHeader = "<th></th><th></th>";
+    $adminEdit = '<th><h4><a href="/product/addToCart.php?id=' . $id . '">Add to Cart</a></h4></th>';
     $adminStock = '';
   }
 
