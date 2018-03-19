@@ -23,11 +23,11 @@ if ($requestType == 'GET') {
                         if ((isset($_POST['email']) != '' ) && (isset($_POST['password']) != '' ))
                         {
                         $email = $_POST['email'];
-                        $email = strtoupper($email);
+                        //$email = strtoupper($email);
                         $password = $_POST['password'];
                         //echo $password;
                         //$sql = 'select * from customers where email = ' . $email . '';
-                        $sql = 'SELECT * FROM `customers` WHERE `email` = "' . $email . '"';
+                        $sql = 'SELECT * FROM `customers` WHERE `email` = lower("' . $email . '")';
                         //echo $sql;
                         $db = connectToDb();
                         $datastuff = $db->query($sql);

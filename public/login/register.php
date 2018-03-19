@@ -37,7 +37,7 @@ if ($requestType == 'GET') {
                         $zip = htmlspecialchars($_POST['zip'], ENT_QUOTES);
                         $phone = htmlspecialchars($_POST['phone'], ENT_QUOTES);
                         $email = htmlspecialchars($_POST['email'], ENT_QUOTES);
-                        $email = strtoupper($email);
+                        //$email = strtoupper($email);
                         $beforePassword = htmlspecialchars($_POST['password'], ENT_QUOTES);
                         $password = password_hash($beforePassword, PASSWORD_DEFAULT);
 
@@ -45,10 +45,26 @@ if ($requestType == 'GET') {
 
 
                         //$input = $_POST;
+
+                        $emailSQL = 'SELECT count(*) FROM `customers` WHERE `email` = "' . $email . '"';
+                        //echo $emailSQL;
+                        $db = connectToDb();
+                        $posts = $db->query($emailSQL);
+                        //$row = $posts->fetch_array(MYSQLI_ASSOC);
+
+                        if(mysqli_fetch_row($posts)[0])
+                        {
+                          echo "Account Used. Please choose another.";
+                        }
+                        else {
+                        //echo "Not used";
                         $sql = "insert into customers (firstname, lastname, address, city, state, zip, phone, email, password) values ('" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "', '" . $email . "', '" . $password . "');";
                         $db = connectToDb();
                         $posts = $db->query($sql);
                         header('Location: /../index.php');
+
+                      }
+
 }
                     } else {
                         // This is an error so show the form again

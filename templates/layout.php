@@ -9,6 +9,7 @@ class layout
     //print_r($_SESSION['login_user']);
     $x = '
     <li><a href="#">Welcome, ' . $user['firstname'] . " " .  $user['lastname'] . '</a></li>
+    <li><a href="#">Cart</a></li>
     <li><a href="/login/logout.php">Logout</a></li>';
     return $x;
 }
