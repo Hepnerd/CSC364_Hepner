@@ -46,6 +46,10 @@ class layout
   }
   if (!isset($_SESSION['cart']))
   {
+    $cartTableStart = '';
+    $string = '<center>Your shopping cart is empty. Add some cars!</center>';
+    $cartTableEnd = '';
+
     //echo '';
   }
     //print_r($_SESSION['login_user']);
@@ -82,9 +86,6 @@ class layout
     $(document).ready(function(){
 
     $(".box").hide();
-
-
-
     var modal = document.getElementById("myModal");
 
     // Get the button that opens the modal
@@ -97,7 +98,6 @@ class layout
     btn.onclick = function() {
         modal.style.display = "block";
     }
-
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
@@ -196,7 +196,7 @@ public static function LoggedOut()
     $("#myBtn").addClass("smallWidth");
     }
     }
-    });
+
 
 
     var modal = document.getElementById("myModal");
@@ -229,6 +229,7 @@ public static function LoggedOut()
     modal.style.display = "none";
     }
     }
+    });
 
     </script>';
     return $x;
@@ -361,7 +362,7 @@ for better animation effect */
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="">Hepner's Haggles</a>
+					<a class="navbar-brand" href="../../index.php">Hepner's Haggles</a>
 				</div>
 				<!-- /.navbar-header -->
 

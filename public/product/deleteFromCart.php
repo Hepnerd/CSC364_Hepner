@@ -10,9 +10,9 @@ if (isset($_SESSION['login_user']))
   {
     $id = $_GET['id'];
     //echo $id;
-    print_r($_SESSION['cart']);
+    //print_r($_SESSION['cart']);
     $delete = array_search($id, array_column($_SESSION['cart'], 'uid'));
-    echo $delete;
+    //echo $delete;
     unset($_SESSION['cart'][$delete]);
     $_SESSION['cart'] = array_values($_SESSION['cart']);
     header("Location: /../index.php");

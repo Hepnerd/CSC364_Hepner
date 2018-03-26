@@ -143,6 +143,8 @@ echo '<div id="myModal' . $modalCount . '" class="modal">
               </div>
               </div>';
 echo '<script>
+$(document).ready(function(){
+
         var modal' . $modalCount . ' = document.getElementById("myModal' . $modalCount . '");
 
 // Get the button that opens the modal
@@ -167,7 +169,9 @@ window.onclick = function(event) {
     if (event.target == myModal' . $modalCount . ') {
         modal' . $modalCount . '.style.display = "none";
     }
-}</script>';
+}
+});
+</script>';
 $count++;
 $modalCount++;
 }
@@ -260,7 +264,7 @@ echo '<script>
 var btn' . $modalCount . ' = document.getElementById("productBtn'. $modalCount . '");
 
 // Get the <span> element that closes the modal
-var span = document.getElementById("closing' . $modalCount . '");
+var span = document.getElementsByClassName("closing' . $modalCount . '")[0];
 
 // When the user clicks on the button, open the modal
 btn' . $modalCount . '.onclick = function() {
