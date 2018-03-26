@@ -43,6 +43,10 @@ if ($requestType == 'GET') {
                           //echo " password works";
                           header("Location: /../index.php");
                         }
+                        else {
+                          //echo "Fails";
+                          header('Location: /../index.php?msg=failed');
+                        }
                       }
                         else {
                           //echo "Fails";

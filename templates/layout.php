@@ -6,11 +6,112 @@ class layout
   public static function LoggedIn()
 {
     $user = $_SESSION['login_user'];
+    $string = '';
+    if (isset($_SESSION['cart']))
+{
+    $results = $_SESSION['cart'];
+
+    //print_r($results);
+    //echo "<p></p>";
+    if (empty($results))
+    {
+      $cartTableStart = '';
+      $string = '<center>Your shopping cart is empty. Add some cars!</center>';
+      $cartTableEnd = '';
+    }
+    else {
+      $cartTableStart = '<div class="container"><table class="table table-hover"><thead><th>Name</th><th>Price</th><th>Quantity</th><th>Options</th></thead><tbody>';
+      $cartTableEnd = '</tbody></table></div>';
+    foreach ($results as $outputCart)
+    {
+      //print_r($outputCart);
+      //echo "<p></p>";
+
+      //extract($outputCart);
+
+      $string .= '<tr><td>' . $outputCart['name'] . '</td><td>' . $outputCart['price'] . '</td><td>' . $outputCart['quantity'] . '</td><td><a href="/product/deleteFromCart.php?id=' . $outputCart['uid'] . '">Delete From Cart</a></td></tr>';
+
+    /*
+      echo '<table>';
+      echo '<tr>';
+      echo '<td>id ' . $outputCart['id'] . '</td>';
+      echo '<td>name ' . $outputCart['name'] . '</td>';
+      echo '<td>price ' . $outputCart['price'] . '</td>';
+      echo '<td>Delete Button</td>';
+      echo '</tr>';
+      echo '</table>';
+      */
+    }
+  }
+  }
+  if (!isset($_SESSION['cart']))
+  {
+    //echo '';
+  }
     //print_r($_SESSION['login_user']);
     $x = '
     <li><a href="#">Welcome, ' . $user['firstname'] . " " .  $user['lastname'] . '</a></li>
-    <li><a href="#">Cart</a></li>
-    <li><a href="/login/logout.php">Logout</a></li>';
+    <li><a  class="myBtn" id="myBtn" href="#">Cart</a></li>
+    <li><a href="/login/logout.php">Logout</a></li>
+
+    <li class="box" style="height:50px;">
+    </li>
+    </ul>
+    </div>
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id="myModalLabel"><b>Shopping Cart</b></h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+              <div class="well">
+              ' . $cartTableStart . '
+                ' . $string . '
+                ' . $cartTableEnd . '
+              </div>
+      </div>
+    </div>
+    </div>
+
+    </div>
+    <script>
+    $(document).ready(function(){
+
+    $(".box").hide();
+
+
+
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+    modal.style.display = "none";
+    }
+    }
+  });
+    </script>';
     return $x;
 }
 public static function LoggedOut()
@@ -128,6 +229,7 @@ public static function LoggedOut()
     modal.style.display = "none";
     }
     }
+
     </script>';
     return $x;
 }
@@ -259,7 +361,7 @@ for better animation effect */
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="http://hepnerd.com">Hepner's Haggles</a>
+					<a class="navbar-brand" href="">Hepner's Haggles</a>
 				</div>
 				<!-- /.navbar-header -->
 

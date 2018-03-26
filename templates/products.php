@@ -98,7 +98,7 @@ while ($post = $posts->fetch_assoc()) {
   if ($admin == "notAdmin")
   {
     $adminEditHeader = "<th></th><th></th>";
-    $adminEdit = '<th><h4><a href="/product/addToCart.php?id=' . $id . '">Add to Cart</a></h4></th>';
+    $adminEdit = '<th><h4><a href="/product/addToCart.php?id=' . $id . '&name=' . $title . '&price=' . $price . '">Add to Cart</a></h4></th>';
     $adminStock = '';
   }
 
