@@ -150,7 +150,7 @@ function showForm($data = null)
                           <div class="form-group">
                               <label class="col-md-3 control-label" for="password">Password</label>
                               <div class="col-md-8">
-                                  <input id="password" name="password" type="text" value="$password" class="form-control input-md" required="">
+                                  <input id="password" name="password" type="password" value="$password" class="form-control input-md" required="">
                               </div>
                           </div>
 

@@ -20,7 +20,7 @@ class layout
       $cartTableEnd = '';
     }
     else {
-      $cartTableStart = '<div class="container"><table class="table table-hover"><thead><th>Name</th><th>Price</th><th>Quantity</th><th>Options</th></thead><tbody>';
+      $cartTableStart = '<div style="overflow-x:auto; width:100%;"><table class="table table-hover"><thead><th>Name</th><th>Price</th><th>Quantity</th><th>Options</th></thead><tbody>';
       $cartTableEnd = '</tbody></table></div>';
     foreach ($results as $outputCart)
     {
@@ -131,8 +131,104 @@ public static function LoggedOut()
 
     </li>
     <li><a class="myBtn" id="myBtn" href="#">Log In</a></li>
-    <li><a href=/login/register.php>Register</a></li>
+    <li><a class="registerButton" id="registerButton" href="#">Register</a></li>
     </ul>
+    </div>
+    <div id="registerModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <h4 class="modal-title" id=""><b>Register for hepnerd.com</b></h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+              <div class="well">
+              <form id="registerForm" action="/login/register.php" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                  <fieldset>
+
+                      <!-- Form Name -->
+                      <!-- Text input-->
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="firstName">First Name</label>
+                          <div class="col-md-8">
+                              <input id="firstName" name="firstName" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="lastName">Last Name</label>
+                          <div class="col-md-8">
+                              <input id="lastName" name="lastName" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="address">Address</label>
+                          <div class="col-md-8">
+                              <input id="address" name="address" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="city">City</label>
+                          <div class="col-md-8">
+                              <input id="city" name="city" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="state">State</label>
+                          <div class="col-md-8">
+                              <input id="state" name="state" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="zip">Zip Code</label>
+                          <div class="col-md-8">
+                              <input id="zip" name="zip" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="phone">Phone Number</label>
+                          <div class="col-md-8">
+                              <input id="phone" name="phone" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="email">Email Address</label>
+                          <div class="col-md-8">
+                              <input id="email" name="email" type="text" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="password">Password</label>
+                          <div class="col-md-8">
+                              <input id="password" name="password" type="password" class="form-control input-md" required="">
+                          </div>
+                      </div>
+
+
+                      <!-- Button (Double) -->
+                      <div class="form-group">
+                          <label class="col-md-3 control-label" for="submit"></label>
+                          <div class="col-md-8">
+                              <button id="submit" name="submit" value="Submit" class="btn btn-success">Submit</button>
+                          </div>
+                      </div>
+
+                  </fieldset>
+              </form>
+              </div>
+      </div>
+    </div>
+    </div>
+
     </div>
     <div id="myModal" class="modal">
 
@@ -168,6 +264,36 @@ public static function LoggedOut()
 
     </div>
     <script>
+    $(document).ready(function(){
+
+    $(".box").hide();
+
+    var modal = document.getElementById("registerModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("registerButton");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+    modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+    modal.style.display = "none";
+    }
+    }
+    });
+
     $(document).ready(function(){
 
     $(".box").hide();
