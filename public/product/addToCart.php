@@ -13,39 +13,35 @@ if (isset($_SESSION['login_user']))
   if (isset($_SESSION['cart']))
   {
     //$cart = array();
+    $results = $_SESSION['cart'];
+
     $cart['uid'] = $_GET['id'];
     $cart['name'] = $_GET['name'];
     $cart['price'] = $_GET['price'];
-    if ($k = array_search($cart['id'], $_SESSION['cart']) === TRUE)
+    //$cart['quantity'] = 1;
+
+    //if (in_array($cart['uid'], $_SESSION['cart']))
+    //echo "works before loop";
+    foreach ($results as $row => $values)
     {
-      $cart['quantity'] = $_SESSION['cart']['quantity'];
+      //$cart['quantity'] = $_SESSION['cart']['quantity'];
+      //echo "works in loop";
+      //$cart['quantity'] = $results['quantity'] + 1;
+      if ($values[$row]['uid'] == $cart['uid'])
+      {
+        $results[$row]['quantity']++;
+        echo "works";
+        break;
+      }
+      else {
+        echo "doesn't work";
+        $cart['quantity'] = 1;
+        $results[] = $cart;
+      }
     }
-    else {
-      $cart['quantity'] = 1;
-    }
 
-    $_SESSION['cart'][] = $cart;
 
-    //print_r($_SESSION['cart']);
-    $results = $_SESSION['cart'];
-    //print_r($results);
-    //echo "<p></p>";
-
-    foreach ($results as $outputCart)
-    {
-      //print_r($outputCart);
-      //echo "<p></p>";
-
-      //extract($outputCart);
-      echo '<table>';
-      echo '<tr>';
-      echo '<td>id ' . $outputCart['uid'] . '</td>';
-      echo '<td>name ' . $outputCart['name'] . '</td>';
-      echo '<td>price ' . $outputCart['price'] . '</td>';
-      echo '<td>Delete Button</td>';
-      echo '</tr>';
-      echo '</table>';
-    }
+    $_SESSION['cart'] = $results;
   }
   else
   {
@@ -56,27 +52,7 @@ if (isset($_SESSION['login_user']))
     $cart['quantity'] = 1;
     //if ()
     $_SESSION['cart'][] = $cart;
-    echo "First Time";
-    //print_r($_SESSION['cart']);
-    $results = $_SESSION['cart'];
-
-    foreach ($results as $outputCart)
-    {
-      //print_r($outputCart);
-      //echo "<p></p>";
-
-      //extract($outputCart);
-      echo '<table>';
-      echo '<tr>';
-      echo '<td>id ' . $outputCart['uid'] . '</td>';
-      echo '<td>name ' . $outputCart['name'] . '</td>';
-      echo '<td>price ' . $outputCart['price'] . '</td>';
-      echo '<td>quantity ' . $outputCart['quantity'] . '</td>';
-      echo '<td>Delete Button</td>';
-      echo '</tr>';
-      echo '</table>';
-    }
   }
 
-  header("Location: /../index.php");
+  //header("Location: /../index.php");
 }

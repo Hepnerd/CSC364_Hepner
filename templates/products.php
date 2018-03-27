@@ -5,11 +5,11 @@ class product
     {
       if (isset($_SESSION['login_user'])) {
         $user = $_SESSION['login_user'];
-        if ($user['email'] == "HEPNERD7@HOTMAIL.COM")
+        if ($user['id'] == 1)
         {
           $admin = "Admin";
         }
-        if ($user['email'] != "HEPNERD7@HOTMAIL.COM")
+        if ($user['id'] != 1)
           {
             $admin = "notAdmin";
           }
