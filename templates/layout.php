@@ -18,6 +18,7 @@ class layout
       $cartTableStart = '';
       $string = '<center>Your shopping cart is empty. Add some cars!</center>';
       $cartTableEnd = '';
+      $cartTableCheckout = "";
     }
     else {
       $cartTableStart = '<div style="overflow-x:auto; width:100%;"><table class="table table-hover"><thead><th>Name</th><th>Price</th><th>Quantity</th><th>Options</th></thead><tbody>';
@@ -42,6 +43,11 @@ class layout
       echo '</table>';
       */
     }
+    $cartTableCheckout = '<div style="    position: absolute;
+    right: 0px;
+
+    padding-bottom: 10px;"><a href="/product/checkOut.php">Check Out</a></div>';
+
   }
   }
   if (!isset($_SESSION['cart']))
@@ -49,6 +55,7 @@ class layout
     $cartTableStart = '';
     $string = '<center>Your shopping cart is empty. Add some cars!</center>';
     $cartTableEnd = '';
+    $cartTableCheckout = "";
 
     //echo '';
   }
@@ -77,6 +84,8 @@ class layout
                 ' . $string . '
                 ' . $cartTableEnd . '
               </div>
+              ' .$cartTableCheckout . '
+
       </div>
     </div>
     </div>
