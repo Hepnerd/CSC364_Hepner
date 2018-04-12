@@ -62,7 +62,7 @@ while ($post = $posts->fetch_assoc()) {
   $desc = $post['description'];
   $stock = $post['qty_available'];
   $price = $post['price'];
-  if ($post['picture'] != null)
+  if ($post['picture'] != NULL)
   {
     $picture = $post['picture'];
   }

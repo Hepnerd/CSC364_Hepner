@@ -1,29 +1,27 @@
 <?php
-session_start();
+include("../../templates/layout.php");
 include('../../includes/application_includes.php');
 if (!isset($_SESSION['login_user'])) {
-  header("Location: /../index.php");
+//if (!isset($_SESSION['login_user'])) {
+  //header("Location: /../index.php");
+  echo "failed";
 }
 if (isset($_SESSION['login_user']))
 {
-include("../../templates/layout.php");
+  //echo "passed";
 $requestType = $_SERVER['REQUEST_METHOD'];
 layout::pageTop("Checkout");
 //Layout::createProduct('World Travels Create Post');
 if ($requestType == 'GET') {
                     showForm();
                   }
-} elseif ($requestType == 'POST') {
+                   elseif ($requestType == 'POST') {
                     //if (validateInput($_POST)) {
                         // Data is valid so save it to the database
                         // pull the fields from the POST array.
                         //print_r($_POST);
                         //session_start();
-                        if (isset($_SESSION['login_user'])) {
-                          header("Location: /../index.php");
-                        }
-                        if (!isset($_SESSION['login_user']))
-                        {
+                          /*
                         $firstName = htmlspecialchars($_POST['firstName'], ENT_QUOTES);
                         $lastName = htmlspecialchars($_POST['lastName'], ENT_QUOTES);
                         $address = htmlspecialchars($_POST['address'], ENT_QUOTES);
@@ -59,104 +57,85 @@ if ($requestType == 'GET') {
                         header('Location: /../index.php');
 
                       }
-
-}
+*/
                     } else {
                         // This is an error so show the form again
-                        showForm($_POST);
+                        showForm();
                     }
-
+}
 function showForm()
                   {
+                    $results = $_SESSION['cart'];
 
+                    $string = "";
+                    $totalCost = 0;
+                    $tax = 0;
+                    $shippingCost = 0;
+                    foreach ($results as $outputCart)
+                    {
+                      $string .= '<tr><td>' . $outputCart['name'] . '</td><td>' . $outputCart['price'] . '</td><td>' . $outputCart['quantity'] . '</td><td><a href="/product/deleteFromCart.php?id=' . $outputCart['uid'] . '">Delete From Cart</a></td></tr>';
+                    }
+                    foreach ($results as $outputCart)
+                    {
+                      $totalCost += $outputCart['price'];
+                    }
+                    $tax += $totalCost * 0.06;
+                    $shippingCost = $totalCost * 0.002;
                       echo <<<postform
-                  <form id="registerForm" action='register.php' method="POST" class="form-horizontal" enctype="multipart/form-data">
-                      <fieldset>
-
-                          <!-- Form Name -->
-                          <legend>Create Account</legend>
-
-                          <!-- Text input-->
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="firstName">First Name</label>
-                              <div class="col-md-8">
-                                  <input id="firstName" name="firstName" type="text" value="$firstName" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="lastName">Last Name</label>
-                              <div class="col-md-8">
-                                  <input id="lastName" name="lastName" type="text" value="$lastName" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="address">Address</label>
-                              <div class="col-md-8">
-                                  <input id="address" name="address" type="text" value="$address" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="city">City</label>
-                              <div class="col-md-8">
-                                  <input id="city" name="city" type="text" value="$city" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="state">State</label>
-                              <div class="col-md-8">
-                                  <input id="state" name="state" type="text" value="$state" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="zip">Zip Code</label>
-                              <div class="col-md-8">
-                                  <input id="zip" name="zip" type="text" value="$zip" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="phone">Phone Number</label>
-                              <div class="col-md-8">
-                                  <input id="phone" name="phone" type="text" value="$phone" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="email">Email Address</label>
-                              <div class="col-md-8">
-                                  <input id="email" name="email" type="text" value="$email" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="password">Password</label>
-                              <div class="col-md-8">
-                                  <input id="password" name="password" type="password" value="$password" class="form-control input-md" required="">
-                              </div>
-                          </div>
-
-
-                          <!-- Button (Double) -->
-                          <div class="form-group">
-                              <label class="col-md-3 control-label" for="submit"></label>
-                              <div class="col-md-8">
-                                  <button id="submit" name="submit" value="Submit" class="btn btn-success">Submit</button>
-                                  <a id="cancel" name="cancel" href="../index.php" value="Cancel" class="btn btn-info">Cancel</a>
-                              </div>
-                          </div>
-
-                      </fieldset>
-                  </form>
-postform;
+                      <section class="container">
+                        <div class="left-half">
+                          <article>
+                            <h1>Cost</h1>
+                            <p>Weekends don't count unless you spend them doing something completely pointless.</p>
+                            $totalCost
+                            $tax
+                            $shippingCost
+                          </article>
+                        </div>
+                        <div class="right-half">
+                          <article>
+                            <h1>Shipping info</h1>
+                            <p>If your knees aren't green by the end of the day, you ought to seriously re-examine your life.</p>
+                          </article>
+                        </div>
+                      </section>
+                      <div class="productCart">$string</div>
+<style>
+.productCart
+{
+  margin-top: 10%;
+}
+section
+{
+  margin-top: 50px;
+}
+article {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 20px;
 }
 
+/* Pattern styles */
+.container {
+  display: table;
+  width: 100%;
+}
 
+.left-half {
+  position: absolute;
+  left: 0px;
+  width: 50%;
+}
 
+.right-half {
+  position: absolute;
+  right: 0px;
+  width: 50%;
+}
+</style>
 
-
+postform;
 }

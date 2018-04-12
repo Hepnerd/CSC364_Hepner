@@ -33,6 +33,11 @@ if ($requestType == 'GET') {
                         $qty_available = htmlspecialchars($_POST['qty_available'], ENT_QUOTES);
                         $price = htmlspecialchars($_POST['price'], ENT_QUOTES);
 
+                        if (basename($_FILES["fileToUpload"]["name"]) == NULL)
+                        {
+                          $target_file = NULL;
+                        }
+                        else {
                         $target_dir = "../assets/img/products/";
                         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
                         $uploadOk = 1;
@@ -75,6 +80,7 @@ if ($requestType == 'GET') {
                             echo "Sorry, there was an error uploading your file.";
                           }
                         }
+                      }
 
                         //$input = $_POST;
                         $sql = "insert into products (name, description, qty_available, price, isActive, picture) values ('" . $name . "', '" . $description . "', '" . $qty_available . "', '" . $price . "', ' 1 ', '" . $target_file . "');";

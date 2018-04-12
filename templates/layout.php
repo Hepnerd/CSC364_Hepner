@@ -43,10 +43,7 @@ class layout
       echo '</table>';
       */
     }
-    $cartTableCheckout = '<div style="    position: absolute;
-    right: 0px;
-
-    padding-bottom: 10px;"><a href="/product/checkOut.php">Check Out</a></div>';
+    $cartTableCheckout = '<div style="position: absolute;right: 0px;padding-bottom: 10px;"><a href="/product/checkOut.php">Check Out</a></div>';
 
   }
   }
