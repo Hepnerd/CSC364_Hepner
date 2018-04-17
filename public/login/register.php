@@ -61,6 +61,11 @@ if ($requestType == 'GET') {
                         $sql = "insert into customers (firstname, lastname, address, city, state, zip, phone, email, password) values ('" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "', '" . $email . "', '" . $password . "');";
                         $db = connectToDb();
                         $posts = $db->query($sql);
+                        $registerCheck = 'SELECT * FROM `customers` WHERE `email` = lower("' . $email . '")';
+                        $db = connectToDb();
+                        $datastuff = $db->query($registerCheck);
+                        $posts = $datastuff->fetch_assoc();
+                        $_SESSION['login_user']= $posts;  // Initializing Session with value of PHP Variable
                         header('Location: /../index.php');
 
                       }

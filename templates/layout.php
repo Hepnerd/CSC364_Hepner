@@ -43,7 +43,7 @@ class layout
       echo '</table>';
       */
     }
-    $cartTableCheckout = '<div style="position: absolute;right: 0px;padding-bottom: 10px;"><a href="/product/checkOut.php">Check Out</a></div>';
+    $cartTableCheckout = '<div style="position: absolute;right: 0px;padding-bottom: 10px;"><a href="/product/checkOut.php">Check Out  (Needs work)</a></div>';
 
   }
   }
@@ -59,7 +59,7 @@ class layout
     //print_r($_SESSION['login_user']);
     $x = '
     <li><a href="#">Welcome, ' . $user['firstname'] . " " .  $user['lastname'] . '</a></li>
-    <li><a  class="myBtn" id="myBtn" href="#">Cart</a></li>
+    <li><a class="myBtn" id="myBtn" href="#">Cart</a></li>
     <li><a href="/login/logout.php">Logout</a></li>
 
     <li class="box" style="height:50px;">
@@ -401,6 +401,7 @@ public static function LoggedOut()
 
 		<!-- Bootstrap Core CSS file -->
 		<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- JQuery scripts -->
       <script src="../../assets/js/jquery-1.11.2.min.js"></script>
 
