@@ -43,7 +43,7 @@ class layout
       echo '</table>';
       */
     }
-    $cartTableCheckout = '<div style="position: absolute;right: 0px;padding-bottom: 10px;"><a href="/product/checkOut.php">Check Out  (Needs work)</a></div>';
+    $cartTableCheckout = '<div style="position: absolute;right: 0px;padding-bottom: 10px;"><a class="button" href="/product/checkOut.php">Check Out</a></div>';
 
   }
   }
@@ -145,7 +145,7 @@ public static function LoggedOut()
     <!-- Modal content -->
     <div class="modal-content">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <button type="button" class="close registerExit" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
     <h4 class="modal-title" id=""><b>Register for hepnerd.com</b></h4>
     </div>
     <div class="modal-body">
@@ -241,7 +241,7 @@ public static function LoggedOut()
     <!-- Modal content -->
     <div class="modal-content">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <button type="button" class="close loginExit" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
     <h4 class="modal-title" id="myModalLabel"><b>Login to hepnerd.com</b></h4>
     </div>
     <div class="modal-body">
@@ -280,7 +280,7 @@ public static function LoggedOut()
     var btn = document.getElementById("registerButton");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    var span = document.getElementsByClassName("registerExit")[0];
 
     // When the user clicks on the button, open the modal
     btn.onclick = function() {
@@ -337,7 +337,7 @@ public static function LoggedOut()
     var btn = document.getElementById("myBtn");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    var span = document.getElementsByClassName("loginExit")[0];
 
     // When the user clicks on the button, open the modal
     btn.onclick = function() {
@@ -419,6 +419,19 @@ public static function LoggedOut()
 	</head>
 	<body>
 		<style>
+    .button {
+    border-radius: 25px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
     .box {
       display:none; !important;
     float:left;

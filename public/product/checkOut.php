@@ -19,7 +19,7 @@ if ($requestType == 'GET') {
                     //if (validateInput($_POST)) {
                         // Data is valid so save it to the database
                         // pull the fields from the POST array.
-                        print_r($_POST);
+                        //print_r($_POST);
                         //session_start();
                         $email = htmlspecialchars($_POST['email'], ENT_QUOTES);
                         $address = htmlspecialchars($_POST['address'], ENT_QUOTES);
@@ -33,10 +33,14 @@ if ($requestType == 'GET') {
                         $cvv = htmlspecialchars($_POST['cvv'], ENT_QUOTES);
                         $sameadr = htmlspecialchars($_POST['sameadr'], ENT_QUOTES);
 
-                        $sql = "UPDATE customers SET address = '" . $address . "', city = '" . $city . "', state = '" . $state . "', zip = '" . $zip . "' WHERE email = " . $email . ";";
-                        echo $sql;
+                        $sql = "UPDATE customers SET address = '" . $address . "', city = '" . $city . "', state = '" . $state . "', zip = '" . $zip . "', billing_address = '" . $address . "', billing_city = '" . $city . "', billing_state = '" . $state . "', billing_zip = '" . $zip . "' WHERE email = '" . $email . "';";
+                        //echo $sql;
                         $db = connectToDb();
                         $posts = $db->query($sql);
+                        $date = date('Y-m-d');
+                        $orderSQL = "insert into orders (customer_id, order_number, shipping_address, shipping_city, shipping_state, shipping_zip, payment_method, order_date) values ('" . $customerID . "', '" . $orderNumber . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', 'credit', '" . $date . "');";
+                        echo $orderSQL;
+                        //$orderDetailsSQL = "insert into order_details (orderID, product_ID, fulfilled_by_ID, price, quantity, ship_date) values ('" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "', '" . $email . "', '" . $password . "');";
                         //header('Location: /../index.php');
 
 
@@ -98,6 +102,18 @@ function showForm()
 
 
 <style>
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 body {
   font-family: Arial;
   font-size: 17px;
