@@ -6,7 +6,48 @@ class layout
   public static function LoggedIn()
 {
     $user = $_SESSION['login_user'];
+    //print_r($user);
     $string = '';
+    $orderString = '';
+    $personID = $_SESSION['login_user']['id'];
+
+    $orderPullingSQL = "select * from orders where customer_ID = $personID";
+    $db = connectToDb();
+    $ordersArray = $db->query($orderPullingSQL);
+    $ordersPersonData = $ordersArray->fetch_assoc();
+
+    //print_r($ordersPersonData);
+
+    //print_r($orderInfoArray);
+    $orderDetailsSQL = "SELECT * FROM `order_details` WHERE fulfilled_by__ID = $personID";
+    //echo $orderDetailsSQL;
+    //$db = connectToDb();
+    $orderProductArray = $db->query($orderDetailsSQL);
+    $orderDetails = $orderProductArray->fetch_assoc();
+    //print_r($orderDetails);
+
+    //print_r($orderDate);
+    //$orderInfo = $pulledSQL->fetch_assoc();
+
+    if (empty($orderDetails))
+    {
+      $orderTableStart = '';
+      $orderString = '<center>You have not ordered anything. Buy some cars!</center>';
+      $orderTableEnd = '';
+      //$cartTableCheckout = "";
+    }
+    else {
+      $orderTableStart = '<div style="overflow-x:auto; width:100%;"><table class="table table-hover"><thead><th>Order #</th><th>Number of Items</th><th>Price</th><th>Delivery Date</th></thead><tbody>';
+      $orderTableEnd = '</tbody></table></div>';
+      if ($orderDetails != "")
+{
+      foreach ($orderProductArray as $order)
+      {
+        $orderString .= '<tr><td>' . $order['id'] . '</td><td>' . $order['quantity'] . '</td><td>' . $order['price'] . '</td><td></td><td>' . $order['ship_date'] . '</td></tr>';
+      }
+    }
+    }
+
     if (isset($_SESSION['cart']))
 {
     $results = $_SESSION['cart'];
@@ -25,23 +66,7 @@ class layout
       $cartTableEnd = '</tbody></table></div>';
     foreach ($results as $outputCart)
     {
-      //print_r($outputCart);
-      //echo "<p></p>";
-
-      //extract($outputCart);
-
       $string .= '<tr><td>' . $outputCart['name'] . '</td><td>' . $outputCart['price'] . '</td><td>' . $outputCart['quantity'] . '</td><td><a href="/product/deleteFromCart.php?id=' . $outputCart['uid'] . '">Delete From Cart</a></td></tr>';
-
-    /*
-      echo '<table>';
-      echo '<tr>';
-      echo '<td>id ' . $outputCart['id'] . '</td>';
-      echo '<td>name ' . $outputCart['name'] . '</td>';
-      echo '<td>price ' . $outputCart['price'] . '</td>';
-      echo '<td>Delete Button</td>';
-      echo '</tr>';
-      echo '</table>';
-      */
     }
     $cartTableCheckout = '<div style="position: absolute;right: 0px;padding-bottom: 10px;"><a class="button" href="/product/checkOut.php">Check Out</a></div>';
 
@@ -53,12 +78,11 @@ class layout
     $string = '<center>Your shopping cart is empty. Add some cars!</center>';
     $cartTableEnd = '';
     $cartTableCheckout = "";
-
-    //echo '';
   }
     //print_r($_SESSION['login_user']);
     $x = '
     <li><a href="#">Welcome, ' . $user['firstname'] . " " .  $user['lastname'] . '</a></li>
+    <li><a class="orderBtn" id="orderBtn" href="#">Orders</a></li>
     <li><a class="myBtn" id="myBtn" href="#">Cart</a></li>
     <li><a href="/login/logout.php">Logout</a></li>
 
@@ -66,13 +90,33 @@ class layout
     </li>
     </ul>
     </div>
-    <div id="myModal" class="modal">
+    <div id="orderModal" class="modal">
 
     <!-- Modal content -->
     <div class="modal-content">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-    <h4 class="modal-title" id="myModalLabel"><b>Shopping Cart</b></h4>
+    <h4 class="modal-title"><b>Orders List</b></h4>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+              <div class="well">
+              ' . $orderTableStart . '
+                ' . $orderString . '
+                ' . $orderTableEnd . '
+              </div>
+      </div>
+    </div>
+    </div>
+
+    </div>
+    <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" id="closeCartModal" data-dismiss="modal"><span aria-hidden="true">×</span><span id="closeCartModal" class="sr-only">Close</span></button>
+    <h4 class="modal-title"><b>Shopping Cart</b></h4>
     </div>
     <div class="modal-body">
       <div class="row">
@@ -98,7 +142,7 @@ class layout
     var btn = document.getElementById("myBtn");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    var span = document.getElementById("closeCartModal");
 
     // When the user clicks on the button, open the modal
     btn.onclick = function() {
@@ -117,6 +161,34 @@ class layout
     }
     }
   });
+  $(document).ready(function(){
+
+  $(".box").hide();
+  var modal = document.getElementById("orderModal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("orderBtn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the button, open the modal
+  btn.onclick = function() {
+      modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+  modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+  if (event.target == modal) {
+  modal.style.display = "none";
+  }
+  }
+});
     </script>';
     return $x;
 }
@@ -495,7 +567,22 @@ for better animation effect */
 	float:right;
 }
 		</style>
-
+<script>
+var first = "";
+var first = getUrlVars()["msg"];
+//alert(first);
+if (first == "failed")
+{
+  alert("Login Incorrect. Try Again.");
+}
+function getUrlVars() {
+var vars = {};
+var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+vars[key] = value;
+});
+return vars;
+}
+</script>
 		<!-- Navigation -->
 	    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 			<div class="container-fluid">

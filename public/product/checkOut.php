@@ -16,11 +16,14 @@ if ($requestType == 'GET') {
                     showForm();
                   }
                    elseif ($requestType == 'POST') {
+                     //print_r($_SESSION['login_user']);
+
                     //if (validateInput($_POST)) {
                         // Data is valid so save it to the database
                         // pull the fields from the POST array.
                         //print_r($_POST);
                         //session_start();
+
                         $email = htmlspecialchars($_POST['email'], ENT_QUOTES);
                         $address = htmlspecialchars($_POST['address'], ENT_QUOTES);
                         $city = htmlspecialchars($_POST['city'], ENT_QUOTES);
@@ -33,16 +36,48 @@ if ($requestType == 'GET') {
                         $cvv = htmlspecialchars($_POST['cvv'], ENT_QUOTES);
                         $sameadr = htmlspecialchars($_POST['sameadr'], ENT_QUOTES);
 
+                        $accountSQL = "SELECT * FROM Customers WHERE email = '" . $email . "'";
+                        $db = connectToDb();
+                        $userACCT1 = $db->query($accountSQL);
+                        $userACCT2 = $userACCT1->fetch_assoc();
+
+                        $OrdersCount = "SELECT COUNT(*) AS total FROM orders";
+                        $ordersCount1 = $db->query($OrdersCount);
+                        $ordersCount2 = $ordersCount1->fetch_assoc();
+                        $orderNumber = $ordersCount2['total'];
+
+                        $customerID = $userACCT2['id'];
+                        //echo $customerID;
                         $sql = "UPDATE customers SET address = '" . $address . "', city = '" . $city . "', state = '" . $state . "', zip = '" . $zip . "', billing_address = '" . $address . "', billing_city = '" . $city . "', billing_state = '" . $state . "', billing_zip = '" . $zip . "' WHERE email = '" . $email . "';";
                         //echo $sql;
-                        $db = connectToDb();
+                        //$db = connectToDb();
                         $posts = $db->query($sql);
-                        $date = date('Y-m-d');
-                        $orderSQL = "insert into orders (customer_id, order_number, shipping_address, shipping_city, shipping_state, shipping_zip, payment_method, order_date) values ('" . $customerID . "', '" . $orderNumber . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', 'credit', '" . $date . "');";
-                        echo $orderSQL;
-                        //$orderDetailsSQL = "insert into order_details (orderID, product_ID, fulfilled_by_ID, price, quantity, ship_date) values ('" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "', '" . $email . "', '" . $password . "');";
-                        //header('Location: /../index.php');
 
+                        $date = date('Y-m-d');
+                        $orderSQL = "insert into orders (customer_ID, order_number, shipping_address, shipping_city, shipping_state, shipping_zip, payment_method, order_date) values ('" . $customerID . "', '" . $orderNumber . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', 'credit', '" . $date . "');";
+                        $makeOrder = $db->query($orderSQL);
+
+                        $deliveryDate = date("Y-m-d", strtotime('+3 day'));
+
+                        $sessionVariables = $_SESSION['cart'];
+                        $personsID = $_SESSION['login_user']['id'];
+                        if ($sessionVariables != "")
+                        {
+                        foreach ($sessionVariables as $productItems)
+                        {
+                        $orderDetailsSQL = "insert into order_details (order_ID, product_ID, fulfilled_by__ID, price, quantity, ship_date) values ('" . $orderNumber . "', '" . $productItems['uid'] . "', '" . $personsID . "', '" . $productItems['price'] . "', '" . $productItems['quantity'] . "', '" . $deliveryDate . "');";
+                        echo $orderDetailsSQL;
+                        $submitSQLOrderDetails = $db->query($orderDetailsSQL);
+                        }
+                      }
+                        $_SESSION['cart'] = null;
+
+
+                        //echo $orderSQL;
+
+
+                        //$orderDetailsSQL = "insert into order_details (orderID, product_ID, fulfilled_by_ID, price, quantity, ship_date) values ('" . $firstName . "', '" . $lastName . "', '" . $address . "', '" . $city . "', '" . $state . "', '" . $zip . "', '" . $phone . "', '" . $email . "', '" . $password . "');";
+                        header('Location: /../index.php');
 
                     } else {
                         // This is an error so show the form again
