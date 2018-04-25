@@ -14,7 +14,12 @@ class layout
     $orderPullingSQL = "select * from orders where customer_ID = $personID";
     $db = connectToDb();
     $ordersArray = $db->query($orderPullingSQL);
-    $ordersPersonData = $ordersArray->fetch_assoc();
+    //$ordersPersonData = $ordersArray->fetch_assoc();
+    //print_r($ordersPersonData);
+
+    //echo "<p></p>";
+
+
 
     //print_r($ordersPersonData);
 
@@ -23,13 +28,22 @@ class layout
     //echo $orderDetailsSQL;
     //$db = connectToDb();
     $orderProductArray = $db->query($orderDetailsSQL);
-    $orderDetails = $orderProductArray->fetch_assoc();
+    //$orderDetails = $orderProductArray->fetch_assoc();
     //print_r($orderDetails);
+    //echo "<p></p>";
+
+    while ($orderPeopleFromFirstStatement = $ordersArray->fetch_assoc()) {
+$resultset1[] = $orderPeopleFromFirstStatement;
+}
+
+while ($orderDetailsFromSecondStatement = $orderProductArray->fetch_assoc()) {
+$resultset2[] = $orderDetailsFromSecondStatement;
+}
 
     //print_r($orderDate);
     //$orderInfo = $pulledSQL->fetch_assoc();
 
-    if (empty($orderDetails))
+    if (empty($resultset2))
     {
       $orderTableStart = '';
       $orderString = '<center>You have not ordered anything. Buy some cars!</center>';
@@ -39,14 +53,53 @@ class layout
     else {
       $orderTableStart = '<div style="overflow-x:auto; width:100%;"><table class="table table-hover"><thead><th>Order #</th><th>Number of Items</th><th>Price</th><th>Delivery Date</th></thead><tbody>';
       $orderTableEnd = '</tbody></table></div>';
-      if ($orderDetails != "")
+      if ($resultset2 != "")
 {
-      foreach ($orderProductArray as $order)
+  $orderNumber = 1;
+      /*foreach ($orderProductArray as $order)
       {
         $orderString .= '<tr><td>' . $order['id'] . '</td><td>' . $order['quantity'] . '</td><td>' . $order['price'] . '</td><td></td><td>' . $order['ship_date'] . '</td></tr>';
       }
+      */
+
+      //for ($i = 0; $i < count($ordersPersonData); $i++)
+
+      //print_r($ordersPersonData);
+      //echo "<p></p>";
+      //print_r($orderDetails);
+
+
+
+      foreach ($resultset1 as $order)
+      {
+        //print_r($order);
+        //echo "<p></p>";
+        $quantityOfProducts = 0;
+        $priceOfProducts = 0;
+        $deliveryDate = 0;
+        //for ($j=0; $j < count($orderDetails); $j++)
+        foreach ($resultset2 as $orderProducts)
+        {
+          //print_r($orderProducts);
+          $comparison1 = $order['order_number'];
+          //echo $comparison1;
+          $comparison2 = $orderProducts['order_ID'];
+          //echo $comparison2;
+          if ($comparison1 == $comparison2)
+          {
+            $quantityOfProducts += $orderProducts['quantity'];
+            $priceOfProducts += $orderProducts['price'] * $orderProducts['quantity'];
+            $deliveryDate = $orderProducts['ship_date'];
+          }
+        }
+        $orderString .= '<tr><td>' . $orderNumber . '</td><td>' . $quantityOfProducts . '</td><td>' . $priceOfProducts . '</td><td></td><td>' . $deliveryDate . '</td></tr>';
+
+        $orderNumber++;
+
     }
-    }
+  }
+}
+
 
     if (isset($_SESSION['cart']))
 {

@@ -71,7 +71,7 @@ if ($requestType == 'GET') {
                         }
                         // Check if $uploadOk is set to 0 by an error
                         if ($uploadOk == 0) {
-                          echo "Sorry, your file was not uploaded.";
+                          echo "Sorry, your image file was not uploaded.";
                           // if everything is ok, try to upload file
                         } else {
                           if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
@@ -87,7 +87,15 @@ if ($requestType == 'GET') {
                         //echo $sql;
                         $db = connectToDb();
                         $posts = $db->query($sql);
-                        header('Location: /../index.php');
+
+                        if ($uploadOk == 0) {
+                          echo "Sorry, your image file was not uploaded.";
+                          // if everything is ok, try to upload file
+                        }
+                        else {
+                          header('Location: /../index.php');
+                        }
+
                       }
                     } else {
                         // This is an error so show the form again
